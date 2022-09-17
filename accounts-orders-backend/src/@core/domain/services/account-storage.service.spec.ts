@@ -1,4 +1,4 @@
-import { AccountMemoryRepository } from '../../infra/memory/account-memory.repository';
+import { AccountMemoryRepository } from '../../infra/db/memory/account-memory.repository';
 import { AccountStorageService } from './account-storage.service';
 import { AccountService } from './account.service';
 

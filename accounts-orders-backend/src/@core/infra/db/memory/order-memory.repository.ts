@@ -1,6 +1,6 @@
-import { UpdateOrderDTO } from '../..//domain/dtos/order.dtos';
-import { Order } from '../../domain/entities/order.entity';
-import { OrderRepository } from '../../domain/repositories/order.repository';
+import { UpdateOrderDTO } from '../../../domain/dtos/order.dtos';
+import { Order } from '../../../domain/entities/order.entity';
+import { OrderRepository } from '../../../domain/repositories/order.repository';
 
 export class OrderMemoryRepository implements OrderRepository {
   private _orders: Order[];

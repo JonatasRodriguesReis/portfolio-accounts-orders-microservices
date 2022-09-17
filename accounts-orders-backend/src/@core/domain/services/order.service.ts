@@ -1,5 +1,6 @@
 import { CreateOrderDTO, UpdateOrderDTO } from '../dtos/order.dtos';
 import { Order } from '../entities/order.entity';
+import { EventStreamRepository } from '../repositories/event-stream.repository';
 import { OrderRepository } from '../repositories/order.repository';
 import { AccountStorageService } from './account-storage.service';
 
@@ -7,6 +8,7 @@ export class OrderService {
   constructor(
     private orderRepository: OrderRepository,
     private accountStorage: AccountStorageService,
+    private eventStream: EventStreamRepository,
   ) {}
 
   async create({
@@ -22,9 +24,22 @@ export class OrderService {
       accountId,
     );
     await this.orderRepository.insert(order);
-    /**
-     * TODO: Event-Stream repository publish create event
-     */
+    await this.eventStream.publish({
+      topic: 'transactions',
+      messages: [
+        {
+          key: 'transactions',
+          value: JSON.stringify({
+            id: order.id,
+            accountId: order.accountId,
+            status: order.status,
+            amount,
+            creditCardName,
+            creditCardNumber,
+          }),
+        },
+      ],
+    });
 
     return order;
   }

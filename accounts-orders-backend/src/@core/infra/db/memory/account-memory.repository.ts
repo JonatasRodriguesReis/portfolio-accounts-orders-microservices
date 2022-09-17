@@ -1,6 +1,6 @@
-import { UpdateAccountDTO } from '../../domain/dtos/account.dtos';
-import { Account } from '../../domain/entities/account.entity';
-import { AccountRepository } from '../../domain/repositories/account.repository';
+import { UpdateAccountDTO } from '../../../domain/dtos/account.dtos';
+import { Account } from '../../../domain/entities/account.entity';
+import { AccountRepository } from '../../../domain/repositories/account.repository';
 
 export class AccountMemoryRepository implements AccountRepository {
   private _accounts: Account[];

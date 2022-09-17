@@ -3,7 +3,7 @@ import { AccountsService } from './accounts.service';
 import { AccountsController } from './accounts.controller';
 import { AccountService } from '../@core/domain/services/account.service';
 import { AccountRepository } from '../@core/domain/repositories/account.repository';
-import { AccountMemoryRepository } from '../@core/infra/memory/account-memory.repository';
+import { AccountMemoryRepository } from '../@core/infra/db/memory/account-memory.repository';
 import { TokenGuard } from './token-guard';
 import { AccountStorageService } from '../@core/domain/services/account-storage.service';
 
