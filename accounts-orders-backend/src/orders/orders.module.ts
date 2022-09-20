@@ -8,6 +8,11 @@ import { AccountsModule } from 'src/accounts/accounts.module';
 import { AccountStorageService } from 'src/@core/domain/services/account-storage.service';
 import { EventStreamKafkaRepository } from 'src/@core/infra/event-stream/kafka/event-stream-kafka.repository';
 import { ClientKafka, ClientsModule, Transport } from '@nestjs/microservices';
+import { getDataSourceToken, TypeOrmModule } from '@nestjs/typeorm';
+import { OrderSchema } from 'src/@core/infra/db/typeorm/order-schema';
+import { OrderTypeOrmRepository } from 'src/@core/infra/db/typeorm/order-typeorm.repository';
+import { DataSource } from 'typeorm';
+import { AccountSchema } from 'src/@core/infra/db/typeorm/account-schema';
 
 @Module({
   imports: [
@@ -40,6 +45,7 @@ import { ClientKafka, ClientsModule, Transport } from '@nestjs/microservices';
         }),
       },
     ]),
+    TypeOrmModule.forFeature([OrderSchema, AccountSchema]),
   ],
   controllers: [OrdersController],
   providers: [
@@ -49,6 +55,16 @@ import { ClientKafka, ClientsModule, Transport } from '@nestjs/microservices';
       useFactory: () => {
         return new OrderMemoryRepository();
       },
+    },
+    {
+      provide: OrderTypeOrmRepository,
+      useFactory: (dataSource: DataSource) => {
+        return new OrderTypeOrmRepository(
+          dataSource.getRepository(OrderSchema),
+          dataSource.getRepository(AccountSchema),
+        );
+      },
+      inject: [getDataSourceToken()],
     },
     {
       provide: EventStreamKafkaRepository,
@@ -72,7 +88,7 @@ import { ClientKafka, ClientsModule, Transport } from '@nestjs/microservices';
         );
       },
       inject: [
-        OrderMemoryRepository,
+        OrderTypeOrmRepository,
         AccountStorageService,
         EventStreamKafkaRepository,
       ],

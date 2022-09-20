@@ -11,21 +11,29 @@ import { find } from 'rxjs';
 export class AccountTypeOrmRepository implements AccountRepository {
   constructor(private ormRepository: Repository<AccountSchema>) {}
   async findOneByToken(token: string): Promise<OutputAccountDTO> {
-    const findAccount = await this.ormRepository.findOneBy({ token });
+    const response = await this.ormRepository.find({
+      where: { token },
+      relations: { orders: true },
+    });
+    const findAccount = response[0];
     if (!findAccount) throw new Error('Account not found!');
     const account: OutputAccountDTO = {
       name: findAccount.name,
       id: findAccount.id,
       token: findAccount.token,
+      orders: findAccount.orders,
     };
     return account;
   }
   async findAll(): Promise<OutputAccountDTO[]> {
-    const findAccounts = await this.ormRepository.find();
+    const findAccounts = await this.ormRepository.find({
+      relations: { orders: true },
+    });
     const accounts: OutputAccountDTO[] = findAccounts.map((findAccount) => ({
       name: findAccount.name,
       id: findAccount.id,
       token: findAccount.token,
+      orders: findAccount.orders,
     }));
     return accounts;
   }
@@ -34,12 +42,17 @@ export class AccountTypeOrmRepository implements AccountRepository {
     await this.ormRepository.insert(model);
   }
   async findOneById(id: string): Promise<OutputAccountDTO> {
-    const findAccount = await this.ormRepository.findOneBy({ id });
+    const response = await this.ormRepository.find({
+      where: { id },
+      relations: { orders: true },
+    });
+    const findAccount = response[0];
     if (!findAccount) throw new Error('Account not found!');
     const account: OutputAccountDTO = {
       name: findAccount.name,
       id: findAccount.id,
       token: findAccount.token,
+      orders: findAccount.orders,
     };
     return account;
   }
@@ -47,7 +60,11 @@ export class AccountTypeOrmRepository implements AccountRepository {
     id: string,
     { name, token }: UpdateAccountDTO,
   ): Promise<OutputAccountDTO> {
-    const findAccount = await this.ormRepository.findOneBy({ id });
+    const response = await this.ormRepository.find({
+      where: { id },
+      relations: { orders: true },
+    });
+    const findAccount = response[0];
     if (!findAccount) throw new Error('Account not found!');
     await this.ormRepository.update(id, {
       name,
@@ -56,17 +73,23 @@ export class AccountTypeOrmRepository implements AccountRepository {
       name,
       id: findAccount.id,
       token,
+      orders: findAccount.orders,
     };
     return account;
   }
   async remove(id: string): Promise<OutputAccountDTO> {
-    const findAccount = await this.ormRepository.findOneBy({ id });
+    const response = await this.ormRepository.find({
+      where: { id },
+      relations: { orders: true },
+    });
+    const findAccount = response[0];
     if (!findAccount) throw new Error('Account not found!');
     await this.ormRepository.remove(findAccount);
     const account: OutputAccountDTO = {
       name: findAccount.name,
       id: findAccount.id,
       token: findAccount.token,
+      orders: findAccount.orders,
     };
     return account;
   }

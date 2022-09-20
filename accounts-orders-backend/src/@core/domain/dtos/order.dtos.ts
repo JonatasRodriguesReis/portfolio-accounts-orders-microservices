@@ -1,3 +1,4 @@
+import { Account } from '../entities/account.entity';
 import { OrderStatus } from '../entities/order.entity';
 
 export interface CreateOrderDTO {
@@ -14,6 +15,7 @@ export interface OutputOrderDTO {
   creditCardName: string;
   status: OrderStatus;
   accountId: string;
+  account?: Account;
 }
 
 export interface UpdateOrderDTO {

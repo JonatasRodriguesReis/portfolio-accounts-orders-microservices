@@ -1,5 +1,6 @@
 import { OrderStatus } from './../../../domain/entities/order.entity';
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { AccountSchema } from './account-schema';
 
 @Entity()
 export class OrderSchema {
@@ -19,6 +20,9 @@ export class OrderSchema {
   @Column({ length: 255 })
   status: OrderStatus;
 
-  @Column({ length: 255 })
+  @Column()
   accountId: string;
+
+  @ManyToOne(() => AccountSchema, (account) => account.orders)
+  account: AccountSchema;
 }

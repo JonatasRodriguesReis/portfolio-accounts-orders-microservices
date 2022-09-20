@@ -6,8 +6,13 @@ import { AccountRepository } from '../@core/domain/repositories/account.reposito
 import { AccountMemoryRepository } from '../@core/infra/db/memory/account-memory.repository';
 import { TokenGuard } from './token-guard';
 import { AccountStorageService } from '../@core/domain/services/account-storage.service';
+import { AccountTypeOrmRepository } from 'src/@core/infra/db/typeorm/account-typeorm.repository';
+import { DataSource } from 'typeorm';
+import { TypeOrmModule, getDataSourceToken } from '@nestjs/typeorm';
+import { AccountSchema } from 'src/@core/infra/db/typeorm/account-schema';
 
 @Module({
+  imports: [TypeOrmModule.forFeature([AccountSchema])],
   controllers: [AccountsController],
   providers: [
     AccountsService,
@@ -18,11 +23,20 @@ import { AccountStorageService } from '../@core/domain/services/account-storage.
       },
     },
     {
+      provide: AccountTypeOrmRepository,
+      useFactory: (dataSource: DataSource) => {
+        return new AccountTypeOrmRepository(
+          dataSource.getRepository(AccountSchema),
+        );
+      },
+      inject: [getDataSourceToken()],
+    },
+    {
       provide: AccountService,
       useFactory: (accountRepository: AccountRepository) => {
         return new AccountService(accountRepository);
       },
-      inject: [AccountMemoryRepository],
+      inject: [AccountTypeOrmRepository],
     },
     {
       provide: AccountStorageService,

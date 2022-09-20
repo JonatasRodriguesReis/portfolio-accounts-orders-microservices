@@ -26,8 +26,13 @@ export class OrdersController {
   }
 
   @Get()
-  findOne() {
+  findAllByAccountId() {
     return this.ordersService.findAllByAccountId();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.ordersService.findOneById(id);
   }
 
   @Patch(':id')

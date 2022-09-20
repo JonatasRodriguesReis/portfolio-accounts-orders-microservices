@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { OrderSchema } from './order-schema';
 
 @Entity()
 export class AccountSchema {
@@ -11,4 +12,7 @@ export class AccountSchema {
 
   @Column({ length: 255 })
   token: string;
+
+  @OneToMany(() => OrderSchema, (order) => order.account)
+  orders: [OrderSchema];
 }
