@@ -16,7 +16,7 @@ async function bootstrap() {
           process.env.KAFKA_SASL_PASSWORD &&
           process.env.KAFKA_SASL_PASSWORD !== '' && {
             sasl: {
-              mechanism: 'plain',
+              mechanism: 'scram-sha-512',
               username: process.env.KAFKA_SASL_USERNAME,
               password: process.env.KAFKA_SASL_PASSWORD,
             },

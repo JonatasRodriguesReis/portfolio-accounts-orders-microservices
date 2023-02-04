@@ -13,6 +13,11 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: jontasreis/transfer-bank-frontend:latest
+          image: jontasreis/transfer-bank-frontend
+          env:
+            - name: NEST_API_HOST
+              value: http://a2ed3a7f7038c4e419f8a021ba6d73c9-899313800.us-east-1.elb.amazonaws.com
+            - name: NEXT_PUBLIC_API_HOST
+              value: http://a2e7bfdd3869d4070bd85b388f6c5028-931466067.us-east-1.elb.amazonaws.com/api
           ports:
             - containerPort: 3000

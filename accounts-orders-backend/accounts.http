@@ -1,0 +1,21 @@
+GET http://aad72dee8e7a04af0b6c0a1866f9446c-1002871582.us-east-1.elb.amazonaws.com/accounts
+
+###
+GET http://a530bb0a37c6d48abad323cb0206d79a-928904956.us-east-1.elb.amazonaws.com/accounts/57608821-7549-4e0c-b789-cede29f938ec
+
+
+###
+POST http://aad72dee8e7a04af0b6c0a1866f9446c-1002871582.us-east-1.elb.amazonaws.com/accounts
+Content-Type: application/json
+
+{
+    "name": "conta 2"
+}
+
+###
+PATCH http://a530bb0a37c6d48abad323cb0206d79a-928904956.us-east-1.elb.amazonaws.com/accounts/d0ffba28-ca9e-4ef9-8799-4bf1d6f28780
+Content-Type: application/json
+
+{
+    "name": "conta 1 alterada",
+}

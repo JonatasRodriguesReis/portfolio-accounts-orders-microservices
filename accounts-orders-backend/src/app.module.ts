@@ -12,12 +12,14 @@ import { AccountSchema } from './@core/infra/db/typeorm/account-schema';
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'docker',
-      database: 'accounts-orders',
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-ignore
+      type: process.env.DB_CONNECTION,
+      host: process.env.DB_HOST,
+      port: Number.parseInt(process.env.DB_PORT),
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
       entities: [OrderSchema, AccountSchema],
       synchronize: true,
     }),

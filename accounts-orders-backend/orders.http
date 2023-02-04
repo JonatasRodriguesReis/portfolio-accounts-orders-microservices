@@ -6,14 +6,14 @@ GET http://localhost:3000/orders/75efb3c2-7ac3-4ebf-b8dd-fa89e758c6d7
 x-token: uwjv5dqrlpo
 
 ###
-POST http://backend.imersao.fullcycle.com.br/orders
+POST http://a530bb0a37c6d48abad323cb0206d79a-928904956.us-east-1.elb.amazonaws.com/orders
 Content-Type: application/json
-x-token: nwashx2nnej
+x-token: ryy8y0e78ge
 
 {
     "amount": 1000.33,
-    "credit_card_number": "4485460940174065",
-    "credit_card_name": "Luiz Carlos",
+    "creditCardNumber": "4485460940174065",
+    "creditCardName": "Luiz Carlos",
     "credit_card_expiration_month": 12,
     "credit_card_expiration_year": 2022,
     "credit_card_cvv": "123"

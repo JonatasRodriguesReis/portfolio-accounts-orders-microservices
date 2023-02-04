@@ -6,6 +6,8 @@
 
 ### aws eks –region $(terraform output -raw region) update-kubeconfig –name $(terraform output -raw cluster_name)
 
+aws eks --region us-east-1 update-kubeconfig --name EKS-Cluster
+
 `
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm install my-release bitnami/mysql
@@ -26,9 +28,9 @@ MYSQL_ROOT_PASSWORD=$(kubectl get secret --namespace default database-mysql -o j
 2. To connect to primary service (read/write):
 
    mysql -h database-mysql.default.svc.cluster.local -uroot -p"$MYSQL_ROOT_PASSWORD"
-   mysql -h database-mysql.default.svc.cluster.local -uroot -p"drVnDGXFAj"
+   mysql -h database-mysql.default.svc.cluster.local -uroot -p"huJAZinHiy"
 
-   drVnDGXFAj
+   huJAZinHiy
 
 CREATE DATABASE gateway;
 CREATE DATABASE backend;
